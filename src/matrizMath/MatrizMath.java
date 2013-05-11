@@ -175,8 +175,8 @@ public class MatrizMath {
 		for (int y = 0; y < this.getFilas(); y++) {
 			for (int x = 0; x < this.getColumnas(); x++) {
 
-				cadena.append(matriz[y][x]);
-				cadena.append(" ");
+				cadena.append(String.format("%10s", matriz[y][x]));
+				cadena.append("\t\t");
 			}
 			cadena.append("\n");
 		}
@@ -400,7 +400,7 @@ public class MatrizMath {
 
 		MatrizMath m1 = new MatrizMath("matriz1.in");
 		MatrizMath m2 = new MatrizMath("matriz2.in");
-		VectorMath v1 = new VectorMath("vec1.in");
+		VectorMath v1 = new VectorMath("vector1.in");
 
 		System.out.println(m1.producto(new Float(-1.0)));
 
