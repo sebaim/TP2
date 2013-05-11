@@ -31,8 +31,7 @@ public class Complejo {
 		this.b= b;
 	}
 	
-	//suma
-	
+	//suma	
 	Complejo suma (Complejo c2)
 	{
 		Complejo result = new Complejo();
