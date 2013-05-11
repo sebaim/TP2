@@ -4,6 +4,7 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
+import java.util.Arrays;
 
 import vectorMath.VectorMath;
 
@@ -21,14 +22,27 @@ public class MatrizMath {
 		return (this.columnas == this.filas);
 	}
 
+	
+	
+	//inicializa en 0 una matriz
+	
+	private void inicializa ()
+	{
+		for (int fila = 0; fila < this.filas; fila++)
+		{
+			for (int columna =0; columna < this.columnas ; columna++)
+				this.matriz[fila][columna] = (double) 0;
+		}
+	}
+	
 	/*
 	 * Constructor privado, solo usado para mostrar resultados
 	 */
-	private MatrizMath(int y, int x) {
+	private MatrizMath(int filas, int columnas) {
 
-		matriz = new Double[y][x];
-		filas = y;
-		columnas = x;
+		matriz = new Double[filas][columnas];
+		this.filas = filas;
+		this.columnas = columnas;
 	}
 
 	/*
@@ -120,21 +134,15 @@ public class MatrizMath {
 	 */
 	public MatrizMath suma(MatrizMath m) {
 
-		if (this.getFilas() != m.getFilas()
-				|| this.getColumnas() != m.getColumnas()) {
-
-			return null;
-		}
+		if (this.getFilas() != m.getFilas()	|| this.getColumnas() != m.getColumnas()) 
+			return null;		
 
 		MatrizMath resultado = new MatrizMath(this.getFilas(),
 				this.getColumnas());
 
 		for (int y = 0; y < this.getFilas(); y++) {
-			for (int x = 0; x < this.getColumnas(); x++) {
-
+			for (int x = 0; x < this.getColumnas(); x++)
 				resultado.matriz[y][x] = this.matriz[y][x] + m.matriz[y][x];
-
-			}
 		}
 
 		return resultado;
@@ -145,21 +153,15 @@ public class MatrizMath {
 	 */
 	public MatrizMath resta(MatrizMath m) {
 
-		if (this.getFilas() != m.getFilas()
-				|| this.getColumnas() != m.getColumnas()) {
-
-			return null;
-		}
+		if (this.getFilas() != m.getFilas()	|| this.getColumnas() != m.getColumnas())
+			return null;		
 
 		MatrizMath resultado = new MatrizMath(this.getFilas(),
 				this.getColumnas());
 
 		for (int y = 0; y < this.getFilas(); y++) {
-			for (int x = 0; x < this.getColumnas(); x++) {
-
+			for (int x = 0; x < this.getColumnas(); x++) 
 				resultado.matriz[y][x] = this.matriz[y][x] - m.matriz[y][x];
-
-			}
 		}
 
 		return resultado;
@@ -168,6 +170,9 @@ public class MatrizMath {
 	/*
 	 * Se muestra la matriz.
 	 */
+	
+	
+	@Override
 	public String toString() {
 
 		StringBuffer cadena = new StringBuffer();
@@ -180,7 +185,6 @@ public class MatrizMath {
 			}
 			cadena.append("\n");
 		}
-
 		return cadena.toString();
 	}
 
@@ -189,20 +193,13 @@ public class MatrizMath {
 	 */
 	public boolean equals(MatrizMath m) {
 
-		if (this.getFilas() != m.getFilas()
-				|| this.getColumnas() != m.getColumnas()) {
-
-			return false;
-		}
+		if (this.getFilas() != m.getFilas()	|| this.getColumnas() != m.getColumnas()) 
+			return false;		
 
 		for (int y = 0; y < this.getFilas(); y++) {
 			for (int x = 0; x < this.getColumnas(); x++) {
-
-				if (!this.matriz[y][x].equals(m.matriz[y][x])) {
-
+				if (!this.matriz[y][x].equals(m.matriz[y][x]))
 					return false;
-				}
-
 			}
 		}
 
@@ -238,10 +235,8 @@ public class MatrizMath {
 		MatrizMath resultado = new MatrizMath(this.filas, this.columnas);
 
 		for (int f = 0; f < this.filas; f++) {
-			for (int c = 0; c < this.columnas; c++) {
-
-				resultado.matriz[f][c] = this.matriz[f][c] * valor;
-			}
+			for (int c = 0; c < this.columnas; c++)
+				resultado.matriz[f][c] = this.matriz[f][c] * valor;			
 		}
 
 		return resultado;
@@ -259,19 +254,12 @@ public class MatrizMath {
 
 		MatrizMath resultado = new MatrizMath(this.filas, 1);
 
-		for (int f = 0; f < this.filas; f++) {
-
-			resultado.matriz[f][0] = 0.0;
-
-		}
+		resultado.inicializa();	
 
 		for (int f = 0; f < this.filas; f++) {
 
-			for (int c = 0; c < this.columnas; c++) {
-
+			for (int c = 0; c < this.columnas; c++) 
 				resultado.matriz[f][0] += this.matriz[f][c] * v.getVector()[c];
-
-			}
 		}
 
 		return resultado;
@@ -283,27 +271,17 @@ public class MatrizMath {
 	 */
 	public MatrizMath producto(MatrizMath m) {
 
-		if (this.columnas != m.filas) {
-
-			return null;
-		}
+		if (this.columnas != m.filas) 
+			return null;		
 
 		MatrizMath resultado = new MatrizMath(this.filas, m.columnas);
 
-		for (int f = 0; f < resultado.filas; f++) {
-			for (int c = 0; c < resultado.columnas; c++) {
-
-				resultado.matriz[f][c] = 0.0;
-			}
-		}
+		resultado.inicializa();
 
 		for (int f = 0; f < resultado.filas; f++) {
 			for (int c = 0; c < resultado.columnas; c++) {
-				for (int k = 0; k < this.columnas; k++) {
-
-					resultado.matriz[f][c] += this.matriz[f][k]
-							* m.matriz[k][c];
-				}
+				for (int k = 0; k < this.columnas; k++) 
+					resultado.matriz[f][c] += this.matriz[f][k] * m.matriz[k][c];				
 			}
 		}
 
