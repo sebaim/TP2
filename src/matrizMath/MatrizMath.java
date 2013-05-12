@@ -91,15 +91,23 @@ public class MatrizMath {
 			if (pivot == 0)
 			{
 				int linea =0;
-				while (this.matriz[linea][c] == 0)
+				while (linea < this.filas && this.matriz[linea][c] == 0)
 					linea++;
+				if (linea < this.filas)
+				{
 				
-				double valor =this.matriz[linea][c];
-				
-				Double []lineaASumar = this.productoLinea(1/valor, linea);
-				
-				this.matriz[filapivot] = this.sumaLinea(lineaASumar, filapivot);
-				identidad.matriz[filapivot] = identidad.sumaLinea(lineaASumar, filapivot);
+					double valor =this.matriz[linea][c];
+					
+					Double []lineaASumar = this.productoLinea(1/valor, linea);
+					
+					this.matriz[filapivot] = this.sumaLinea(lineaASumar, filapivot);
+					identidad.matriz[filapivot] = identidad.sumaLinea(lineaASumar, filapivot);
+				}
+				else
+				{
+					System.out.println("La matriz no se puede invertir");
+					return null;
+				}
 					
 					
 			}
@@ -497,15 +505,20 @@ public class MatrizMath {
 		MatrizMath m2 = new MatrizMath("matriz2.in");
 		MatrizMath m3 = new MatrizMath("matriz3.in");
 		MatrizMath m4 = new MatrizMath("matriz4.in");
+		MatrizMath m5 = new MatrizMath("matriz5.in");
 		VectorMath v1 = new VectorMath("vector1.in");
 
-		System.out.println(m1);
-		System.out.println(m1.normaDos());
-		System.out.println(m3.identidad());
-		System.out.println(m3.inversa());
+//		System.out.println(m1);
+//		System.out.println(m1.normaDos());
+//		System.out.println(m3.identidad());
+//		System.out.println(m3.inversa());
 		
+
+		System.out.println(m5);
+		System.out.println(m5.identidad());
+		System.out.println(m5.inversa());
 		
-		 System.out.println((m4.producto(m4.inversa())).normaUno());
+		 System.out.println(m5.producto(m5.inversa()));
 		 
 		//System.out.println(m1.producto(new Float(-1.0)));
 

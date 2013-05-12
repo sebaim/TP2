@@ -1,3 +1,7 @@
+--sebastian
+--12/05/2013
+	Fix para que diga que la matriz no se puede invertir cuando una fila es 0
+
 --emiliano
 --12/05/2013
 	Agregue el calculo de la Norma2.
