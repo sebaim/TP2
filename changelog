@@ -1,5 +1,14 @@
 --sebastian
 --12/05/2013
+	Un nuevo fix para el calculo de la inversa. Ahora acomoda al principio las filas de la matriz por si
+	hay alguna que no requiera ser modificada.
+	El caso que fallaba era este (matriz 5):
+	   1.0       1.0     1.0		
+       0.0       0.0     1.0		
+       1.0       0.0     1.0
+
+--sebastian
+--12/05/2013
 	Fix para que diga que la matriz no se puede invertir cuando una fila es 0
 
 --emiliano

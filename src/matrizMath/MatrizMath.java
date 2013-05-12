@@ -75,11 +75,48 @@ public class MatrizMath {
 			
 	}
 	
+	private void inviertoFilas (int fila1, int fila2)
+	{
+		Double []l1;
+		Double []l2;
+		l1 = this.matriz[fila1];
+		l2 = this.matriz[fila2];	
+		
+		this.matriz[fila1] = l2;
+		this.matriz[fila2] = l1;
+	}	
+	
+	private boolean comparoFilasIguales (Double[] a, Double[]b)
+	{
+		int ind=0;
+		//boolean es_igual = true;
+		
+		while (ind < a.length && Double.compare(a[ind], b[ind])==0)
+			ind++;
+		
+		return ind == a.length ;			
+
+	}
+		
 	//matriz inversa
 	private MatrizMath inversa ()
 	{
 		//busco la matriz identidad
-		MatrizMath identidad = this.identidad();	
+		MatrizMath identidad = this.identidad();
+		
+		//comparo cada fila con cada fila de la matriz identidad y si es igual las acomodo
+		for (int fm=0; fm<this.filas ; fm++)
+		{
+			for (int fi=0; fi < this.filas ; fi++)
+			{			
+				if (comparoFilasIguales(this.matriz[fm], this.identidad().matriz[fi]))
+				{
+					this.inviertoFilas(fm, fi);
+					identidad.inviertoFilas(fm, fi);
+				}
+			}
+			
+		}
 		
 		int filapivot = 0;
 		for (int c = 0; c < this.columnas ; c++)
@@ -122,8 +159,7 @@ public class MatrizMath {
 					identidad.matriz [filapivot] = identidad.productoLinea(operador,filapivot);
 			
 				}
-			}		
-			
+			}					
 			
 			while (fila < this.filas)			
 			{				
