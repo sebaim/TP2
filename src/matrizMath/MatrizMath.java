@@ -1,5 +1,6 @@
 package matrizMath;
 
+import java.math.*;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
@@ -410,7 +411,7 @@ public class MatrizMath {
 
 			for (int f = 0; f < this.filas; f++) {
 
-				resultado[c] += this.matriz[f][c];
+				resultado[c] += Math.abs(this.matriz[f][c]);
 			}
 		}
 
@@ -439,7 +440,7 @@ public class MatrizMath {
 
 			for (int c = 0; c < this.columnas; c++) {
 
-				resultado[f] += this.matriz[f][c];
+				resultado[f] += Math.abs(this.matriz[f][c]);
 			}
 		}
 
