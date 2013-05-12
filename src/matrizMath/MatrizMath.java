@@ -25,7 +25,7 @@ public class MatrizMath {
 
 	// inicializa en 0 una matriz
 
-	private void inicializa() {
+	public void inicializa() {
 		for (int fila = 0; fila < this.filas; fila++) {
 			for (int columna = 0; columna < this.columnas; columna++)
 				this.matriz[fila][columna] = (double) 0;
@@ -91,7 +91,7 @@ public class MatrizMath {
 	}
 
 	// matriz inversa
-	private MatrizMath inversa() {
+	public MatrizMath inversa() {
 		// si el determinante es 0 la matriz no se puede invertir
 		if (this.determinante() == 0) {
 			System.out
@@ -403,7 +403,7 @@ public class MatrizMath {
 	/*
 	 * Producto de una matriz por un vector.
 	 */
-	public MatrizMath producto(VectorMath v) {
+	public VectorMath producto(VectorMath v) {
 
 		if (v.getVector().length != this.columnas) {
 
@@ -419,8 +419,14 @@ public class MatrizMath {
 			for (int c = 0; c < this.columnas; c++)
 				resultado.matriz[f][0] += this.matriz[f][c] * v.getVector()[c];
 		}
-
-		return resultado;
+		
+		VectorMath vectorResultado = new VectorMath(this.filas);
+		
+		for (int f = 0; f < this.filas; f++) {
+			vectorResultado.agregarValor(f, resultado.matriz[f][0]);
+		}
+		
+		return vectorResultado;
 
 	}
 
@@ -590,6 +596,7 @@ public class MatrizMath {
 		// System.out.println(m1.normaDos());
 		// System.out.println(m3.identidad());
 		System.out.println(m4.determinante());
+		System.out.println(m4.inversa());
 
 		// System.out.println(m6);
 		// System.out.println(m6.adjunto(0, 0));

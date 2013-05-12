@@ -53,13 +53,15 @@ public class Sel {
 				this.m = new MatrizMath(dim, dim);
 
 				// Se llena la matriz con los valores del archivo de entrada
+				int contFila = 0;
 				while ((linea = br.readLine()) != null) {
 
 					String[] valores = linea.split(" ");
-
-					m.setValor(Integer.parseInt(valores[0]),
-							Integer.parseInt(valores[1]),
-							Double.parseDouble(valores[2]));
+					for(int col = 0 ; col < valores.length ; col++)
+					m.setValor(contFila,
+							col,
+							Double.parseDouble(valores[col]));
+					contFila++;
 				}
 
 			}
@@ -81,7 +83,8 @@ public class Sel {
 	}
 
 	public void resolver() {
-
+		MatrizMath inversa = this.m.inversa();
+		this.x= inversa.producto(b);		
 	}
 
 	// Metodo para calcular el error entre dos matrices
@@ -106,7 +109,9 @@ public class Sel {
 
 	public static void main(String[] args) {
 		
-		Sel s = new Sel("SEL");
+		Sel s = new Sel("SEL2");
+		s.resolver();
+		s.mostrarResultado();
 		
 	}
 }
