@@ -21,8 +21,6 @@ public class MatrizMath {
 
 		return (this.columnas == this.filas);
 	}
-
-	
 	
 	//inicializa en 0 una matriz
 	
@@ -34,6 +32,117 @@ public class MatrizMath {
 				this.matriz[fila][columna] = (double) 0;
 		}
 	}
+	
+	//crea matriz identidad
+	
+	private MatrizMath identidad ()
+	{
+		if (!this.cuadrada())
+			return null;
+		MatrizMath identidad = new MatrizMath(this.filas, this.columnas);
+		identidad.inicializa();
+		for (int filas = 0; filas < this.filas; filas ++)
+			identidad.matriz[filas][filas]=1.0;
+		
+		return identidad;
+				
+	}
+	
+	private Double[] productoLinea (Double d, int linea)
+	{
+		Double[] resultado = new Double [this.columnas];
+		for (int i=0; i < this.columnas ;i++)
+			resultado [i] = this.matriz[linea][i]* d;
+		return resultado;
+	}
+	
+	private Double[] sumaLinea (Double[]d, int linea)
+	{
+		Double[] resultado = new Double [this.columnas];
+		for (int i=0; i < this.columnas ;i++)
+			resultado [i] = this.matriz[linea][i] + d[i];
+		return resultado;
+			
+	}
+	
+	private Double[] restaLinea (Double[]d, int linea)
+	{
+		Double[] resultado = new Double [this.columnas];
+		for (int i=0; i < this.columnas ;i++)
+			resultado [i] = this.matriz[linea][i] - d[i];
+		return resultado;
+			
+	}
+	
+	//matriz inversa
+	private MatrizMath inversa ()
+	{
+		//busco la matriz identidad
+		MatrizMath identidad = this.identidad();	
+		
+		int filapivot = 0;
+		for (int c = 0; c < this.columnas ; c++)
+		{			
+			int fila = 0;			
+			
+			double pivot = this.matriz[filapivot][c];
+			//si el pivot es 0 tengo que calcular el 1 desde alguna otra fila
+			if (pivot == 0)
+			{
+				int linea =0;
+				while (this.matriz[linea][c] == 0)
+					linea++;
+				
+				double valor =this.matriz[linea][c];
+				
+				Double []lineaASumar = this.productoLinea(1/valor, linea);
+				
+				this.matriz[filapivot] = this.sumaLinea(lineaASumar, filapivot);
+				identidad.matriz[filapivot] = identidad.sumaLinea(lineaASumar, filapivot);
+					
+					
+			}
+			else
+			{
+				if (pivot != 1)
+				{
+					// obtengo el numero a dividir para que quede uno
+					double operador = 1/pivot;
+			
+					this.matriz[filapivot] = this.productoLinea(operador,filapivot);
+					identidad.matriz [filapivot] = identidad.productoLinea(operador,filapivot);
+			
+				}
+			}		
+			
+			
+			while (fila < this.filas)			
+			{				
+				//ahora que tengo el pivot uno hago que el resto de la columna quede en 0
+				if (fila != filapivot)
+				{
+					double valor = this.matriz[fila][c];
+					if (valor != 0) //si es cero no hago nada
+					{
+						//multiplico el 1 del pivot por el numero que necesite y resto las filas					
+						Double []lineaARestarM = this.productoLinea(valor, filapivot);
+						Double []lineaARestarI = identidad.productoLinea(valor, filapivot);
+					
+						this.matriz[fila] = this.restaLinea(lineaARestarM,fila);
+						identidad.matriz[fila] = identidad.restaLinea(lineaARestarI, fila);						
+					}
+				}
+				fila++;
+			}
+			filapivot++;
+		}
+		
+		return identidad;
+				
+		
+	}
+	
+	//
 	
 	/*
 	 * Constructor privado, solo usado para mostrar resultados
@@ -263,7 +372,7 @@ public class MatrizMath {
 		}
 
 		return resultado;
-
+		
 	}
 
 	/*
@@ -318,7 +427,7 @@ public class MatrizMath {
 	}
 
 	/*
-	 * Norma Infinito de un vector.
+	 * Norma Infinito de una matriz.
 	 */
 	public Double normaInfinito() {
 
@@ -352,10 +461,6 @@ public class MatrizMath {
 		return null;
 	}
 
-	public MatrizMath inversa(){
-
-		return this.producto((float) -1.0);
-	}
 
 	/*
 	 * Determinante de una matriz.
@@ -378,9 +483,17 @@ public class MatrizMath {
 
 		MatrizMath m1 = new MatrizMath("matriz1.in");
 		MatrizMath m2 = new MatrizMath("matriz2.in");
+		MatrizMath m3 = new MatrizMath("matriz3.in");
+		MatrizMath m4 = new MatrizMath("matriz4.in");
 		VectorMath v1 = new VectorMath("vector1.in");
 
-		System.out.println(m1.producto(new Float(-1.0)));
+		System.out.println(m3);
+		System.out.println(m3.identidad());
+		System.out.println(m3.inversa());
+		
+		 System.out.println((m4.producto(m4.inversa())).normaUno());
+		 
+		//System.out.println(m1.producto(new Float(-1.0)));
 
 	}
 }

@@ -1,17 +1,21 @@
+--sebastian
+--12/05/2013
+	Metodo inversa (faltaria algun caso complicado para probar)
+	Metodo identidad
 
---s.ingni.magallan
+--sebastian
 --11/05/2013
 	cambie los nombres en el contructor de matriz de y,x a filas columnas,
 	borre llaves de mas en for e ifs
 	cree un metodo inicializa en matrizMath para que inicialice en 0 y lo
 	llamo en vez de crear los 2 for cada vez que inicializo.
 
---s.ingni.magallan
+--sebastian
 --11/05/2013
 	Agregue los vec.in de Matias
 	Cambie el toString de la Matriz para que se vea alineadoa a la derecha
 
---sebastian.ingni.magallan
+--sebastian
 --11/05/2013
 	Agregando cambios Matias
 	

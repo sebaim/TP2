@@ -26,6 +26,11 @@ public class VectorMath {
 		vector = new Double [tam];
 	}
 	
+	public VectorMath (Double linea [])
+	{
+		this.vector = linea;
+	}
+	
 	public VectorMath (String path)
 	{	      
 	      File archivo = null;
@@ -112,7 +117,7 @@ public class VectorMath {
 	}
 	
 	//producto
-	private VectorMath producto (double k)
+	public VectorMath producto (double k)
 	{		
 		VectorMath resultado = new VectorMath(this.vector.length);
 		for (int i= 0; i < this.vector.length; i++)
