@@ -15,8 +15,10 @@ public class Sel {
 
 	private VectorMath x, b;
 
-	private double error;
+	private Double error;
 	
+	final private double epsilon = 1 * Math.pow(10, -12);
+
 	public Sel(String path) {
 
 		File archivo = null;
@@ -77,18 +79,34 @@ public class Sel {
 			}
 		}
 	}
-	
-	public void resolver(){
+
+	public void resolver() {
+
+	}
+
+	// Metodo para calcular el error entre dos matrices
+	private Double calcularErrorSolucion(MatrizMath m1, MatrizMath m2){
 		
-		
+		MatrizMath restaMatrices = m1.resta(m2);
+		return restaMatrices.normaDos();
 		
 	}
+	
+	// Metodo que muestra el resultado 
+	public void mostrarResultado(){
+		
+		Double[] resultado = x.getVector();
+		System.out.println("Vector de Resultados:");
+		for(int i = 0; i < dim; i++){
+			
+			System.out.println(resultado[i]);
+		}
+	}
+	
 
 	public static void main(String[] args) {
-
-
+		
 		Sel s = new Sel("SEL");
-
+		
 	}
-
 }
