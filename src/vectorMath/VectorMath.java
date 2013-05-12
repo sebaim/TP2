@@ -1,4 +1,4 @@
-//Implementar los métodos que permitan realizar las siguientes operaciones entre objetos de la clase: 
+//Implementar los mï¿½todos que permitan realizar las siguientes operaciones entre objetos de la clase: 
 //suma de vectores
 //resta de vectores
 //producto de un vectorMath por otro vectorMath
@@ -21,7 +21,7 @@ public class VectorMath {
 
 	private Double[] vector;
 
-	private VectorMath (int tam)
+	public VectorMath (int tam)
 	{
 		vector = new Double [tam];
 	}
@@ -88,7 +88,13 @@ public class VectorMath {
 		return vector;
 	}
 		
-
+	public void agregarValor(int pos, Double valor){
+		
+		if ( pos >= 0 && pos < this.vector.length){
+			
+			this.vector[pos] = new Double(valor);
+		}
+	}
 
 	//suma
 	private VectorMath suma(VectorMath v) {
