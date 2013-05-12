@@ -323,9 +323,7 @@ public class MatrizMath {
 
 	/*
 	 * Se muestra la matriz.
-	 */
-	
-	
+	 */	
 	@Override
 	public String toString() {
 
@@ -334,7 +332,7 @@ public class MatrizMath {
 		for (int y = 0; y < this.getFilas(); y++) {
 			for (int x = 0; x < this.getColumnas(); x++) {
 
-				cadena.append(String.format("%10s", matriz[y][x]));
+				cadena.append(String.format("%10.3f", matriz[y][x]));
 				cadena.append("\t\t");
 			}
 			cadena.append("\n");
@@ -516,23 +514,61 @@ public class MatrizMath {
 
 		return Math.sqrt(resultado);
 	}
+	
+	//adjunto
+	MatrizMath adjunto (int fila, int col)
+	{
+		MatrizMath adjunto = new MatrizMath(this.filas -1 , this.columnas -1);
+		adjunto.inicializa();
+		int fa =0;
+		int ca =0;
+		
+		for (int f =0; f < this.filas; f++)
+		{
+			ca = 0;
+			if (f != fila )
+			{
+				for (int c =0 ; c < this.columnas; c++)
+				{
+					if (c != col)
+					{
+						adjunto.matriz[fa][ca] = this.matriz[f][c];
+						ca++;
+					}
+				}
+				fa++;				
+			}
+		}		
+		return adjunto;		
+	}
 
 
 	/*
 	 * Determinante de una matriz.
 	 */
-	public Double determinante() {
+	public Double determinante() {	
+		
+		if (this.filas == 2)
+			return determinante2x2();
+		
+		double determinante = 0.0;
+		
+		for (int c = 0; c < this.columnas; c++)
+		{
+			determinante += this.matriz[0][c]* this.adjunto(0, c).determinante() * (c%2 == 0?1:-1);
+		}		
+			return determinante;					
 
-		// TODO
-
-		// if ( ! this.cuadrada()){
-
+	}
+	
+	private Double determinante2x2 (){
+		if (this.cuadrada() && this.filas == 2)
+			{
+			double val = this.matriz[0][0] * this.matriz [1][1] - this.matriz[0][1]* this.matriz[1][0];
+			return val;
+			}
+		
 		return null;
-		// }
-		//
-		// Double resultado = new Double(0.0);
-		//
-		// return resultado;
 	}
 
 	public static void main(String[] args) {
@@ -542,21 +578,34 @@ public class MatrizMath {
 		MatrizMath m3 = new MatrizMath("matriz3.in");
 		MatrizMath m4 = new MatrizMath("matriz4.in");
 		MatrizMath m5 = new MatrizMath("matriz5.in");
+		MatrizMath m6 = new MatrizMath("matriz6.in");
 		VectorMath v1 = new VectorMath("vector1.in");
 
+				
 //		System.out.println(m1);
 //		System.out.println(m1.normaDos());
 //		System.out.println(m3.identidad());
 //		System.out.println(m3.inversa());
 		
 
-		System.out.println(m5);
-		System.out.println(m5.identidad());
-		System.out.println(m5.inversa());
+		System.out.println(m6);
+		System.out.println(m6.adjunto(0, 0));
+		System.out.println(m6.adjunto(0, 1));
+		//System.out.println(m6.adjunto(0, 2));
 		
-		 System.out.println(m5.producto(m5.inversa()));
+		System.out.println(m6.determinante());
+		//System.out.println(m4.identidad());
+		//System.out.println(m4.inversa());
+		
+		 //System.out.println(m4.producto(m4.inversa()));
 		 
 		//System.out.println(m1.producto(new Float(-1.0)));
+		 
+//			System.out.println(m6);
+//			System.out.println(m6.identidad());
+//			System.out.println(m6.inversa());
+			
+			 //System.out.println(m6.producto(m6.inversa()));
 
 	}
 }
