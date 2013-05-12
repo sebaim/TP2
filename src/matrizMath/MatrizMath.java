@@ -101,6 +101,12 @@ public class MatrizMath {
 	//matriz inversa
 	private MatrizMath inversa ()
 	{
+		//si el determinante es 0 la matriz no se puede invertir
+		if (this.determinante()==0)
+		{
+			System.out.println ("La matriz no se puede invertir, su determinante es 0");
+			return null;
+		}
 		//busco la matriz identidad
 		MatrizMath identidad = this.identidad();
 		
@@ -328,7 +334,7 @@ public class MatrizMath {
 	public String toString() {
 
 		StringBuffer cadena = new StringBuffer();
-
+		
 		for (int y = 0; y < this.getFilas(); y++) {
 			for (int x = 0; x < this.getColumnas(); x++) {
 
@@ -549,7 +555,7 @@ public class MatrizMath {
 	public Double determinante() {	
 		
 		if (this.filas == 2)
-			return determinante2x2();
+			return (this.matriz[0][0] * this.matriz [1][1] - this.matriz[0][1]* this.matriz[1][0]);
 		
 		double determinante = 0.0;
 		
@@ -560,40 +566,44 @@ public class MatrizMath {
 			return determinante;					
 
 	}
-	
-	private Double determinante2x2 (){
-		if (this.cuadrada() && this.filas == 2)
-			{
-			double val = this.matriz[0][0] * this.matriz [1][1] - this.matriz[0][1]* this.matriz[1][0];
-			return val;
-			}
-		
-		return null;
-	}
-
 	public static void main(String[] args) {
 
+		//ejemplo 1 (inversa)
 		MatrizMath m1 = new MatrizMath("matriz1.in");
+		
+		//ejemplo 2 (inversa)
 		MatrizMath m2 = new MatrizMath("matriz2.in");
+		
+		//ejemplo 3 (inversa)
 		MatrizMath m3 = new MatrizMath("matriz3.in");
+		
+		//ejemplo 4 caso 4 x 4
 		MatrizMath m4 = new MatrizMath("matriz4.in");
+		
+		//ejemplo 5 caso que fallaba
 		MatrizMath m5 = new MatrizMath("matriz5.in");
+		
+		//ejemplo 6 caso determinante en matriz 5x5
 		MatrizMath m6 = new MatrizMath("matriz6.in");
-		VectorMath v1 = new VectorMath("vector1.in");
+		
+		//ejemplo 7 caso no se puede resolver (det 0)
+		MatrizMath m7 = new MatrizMath("matriz7.in");
+		
+		//VectorMath v1 = new VectorMath("vector1.in");
 
 				
 //		System.out.println(m1);
 //		System.out.println(m1.normaDos());
 //		System.out.println(m3.identidad());
-//		System.out.println(m3.inversa());
+		System.out.println(m4.determinante());
 		
 
-		System.out.println(m6);
-		System.out.println(m6.adjunto(0, 0));
-		System.out.println(m6.adjunto(0, 1));
+//		System.out.println(m6);
+//		System.out.println(m6.adjunto(0, 0));
+//		System.out.println(m6.adjunto(0, 1));
 		//System.out.println(m6.adjunto(0, 2));
 		
-		System.out.println(m6.determinante());
+		//System.out.println(m7.inversa());
 		//System.out.println(m4.identidad());
 		//System.out.println(m4.inversa());
 		
