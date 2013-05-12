@@ -457,9 +457,20 @@ public class MatrizMath {
 	}
 
 	public Double normaDos() {
-		// TODO
+		
+		Double resultado = (double) 0;
 
-		return null;
+		for (int c = 0; c < this.columnas; c++) {
+
+			for (int f = 0; f < this.filas; f++) {
+
+				resultado += Math.pow(this.matriz[f][c],2);
+			}
+		}
+
+		
+
+		return Math.sqrt(resultado);
 	}
 
 
@@ -488,9 +499,11 @@ public class MatrizMath {
 		MatrizMath m4 = new MatrizMath("matriz4.in");
 		VectorMath v1 = new VectorMath("vector1.in");
 
-		System.out.println(m3);
+		System.out.println(m1);
+		System.out.println(m1.normaDos());
 		System.out.println(m3.identidad());
 		System.out.println(m3.inversa());
+		
 		
 		 System.out.println((m4.producto(m4.inversa())).normaUno());
 		 
