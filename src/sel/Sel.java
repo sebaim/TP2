@@ -86,7 +86,6 @@ public class Sel {
 		MatrizMath inversa = this.m.inversa();
 		if (inversa != null)				
 		this.x= inversa.producto(b);
-		
 	}
 
 	// Metodo para calcular el error entre dos matrices
