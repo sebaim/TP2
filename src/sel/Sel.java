@@ -53,15 +53,15 @@ public class Sel {
 				this.m = new MatrizMath(dim, dim);
 
 				// Se llena la matriz con los valores del archivo de entrada
-				int contFila = 0;
+				
 				while ((linea = br.readLine()) != null) {
 
 					String[] valores = linea.split(" ");
-					for(int col = 0 ; col < valores.length ; col++)
-					m.setValor(contFila,
-							col,
-							Double.parseDouble(valores[col]));
-					contFila++;
+				
+					m.setValor(Integer.parseInt(valores[0]),
+							Integer.parseInt(valores[1]),
+							Double.parseDouble(valores[2]));
+							
 				}
 
 			}
