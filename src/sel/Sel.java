@@ -91,27 +91,22 @@ public class Sel {
 			// Se calcula la matriz identidad I'
 			MatrizMath Iprima = this.m.producto(Minversa);
 
-			if (calcularErrorSolucion(this.m.identidad(), Iprima).doubleValue() >= EPSILON) {
+			this.error = calcularErrorSolucion(this.m.identidad(), Iprima).doubleValue();
+			if ( this.error >= EPSILON) {
 
-				System.out.println("Error de la matriz I' muy grande.");
 				return;
 			}
 
-			// Se calcula el valor de X'
+			// Se calcula el vector X'
 			VectorMath Xprima = Minversa.producto(b);
 
-			// Se calcula el valor de B'
+			// Se calcula el vector B'
 			VectorMath Bprima = m.producto(Xprima);
 
 			// Se calcula el error || B - B' ||2
 			this.error = calcularErrorSolucion(this.b, Bprima).doubleValue();
-			if (this.error >= EPSILON) {
 
-				System.out.println("Error de la matriz B' muy grande.");
-				return;
-			}
-			
-			// Como el error es muy pequeño, el resultado X es aproximado a X'
+			// El resultado X se le asigna al calculado X'
 			this.x = Xprima;
 		}
 	}
@@ -146,11 +141,28 @@ public class Sel {
 		}
 	}
 
+	/*
+	 * Testea si el error es muy grande
+	 */
+	public boolean test() {
+
+		if (this.error >= EPSILON) {
+
+			System.out.println("Error de la matriz B' muy grande.");
+			return false;
+		} else {
+
+			System.out.println("Incógnitas encontradas con un error pequeño.");
+			return true;
+		}
+	}
+
 	public static void main(String[] args) {
 
-		Sel s = new Sel("SEL2");
+		Sel s = new Sel("SEL");
 		s.resolver();
 		s.mostrarResultado();
+		s.test();
 
 	}
 }
