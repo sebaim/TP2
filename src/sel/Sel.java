@@ -84,6 +84,8 @@ public class Sel {
 
 	public void resolver() {
 
+		this.error = EPSILON;
+		
 		// calculo de la inversa de M
 		MatrizMath Minversa = this.m.inversa();
 		if (Minversa != null) {
@@ -148,11 +150,9 @@ public class Sel {
 
 		if (this.error >= EPSILON) {
 
-			System.out.println("Error de la matriz B' muy grande.");
 			return false;
 		} else {
 
-			System.out.println("Incógnitas encontradas con un error pequeño.");
 			this.mostrarResultado();
 			return true;
 		}
@@ -160,7 +160,7 @@ public class Sel {
 
 	public static void main(String[] args) {
 
-		Sel s = new Sel("SEL");
+		Sel s = new Sel("SEL2");
 		s.resolver();		
 		s.test();
 
