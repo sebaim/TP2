@@ -84,7 +84,9 @@ public class Sel {
 
 	public void resolver() {
 		MatrizMath inversa = this.m.inversa();
-		this.x= inversa.producto(b);		
+		if (inversa != null)				
+		this.x= inversa.producto(b);
+		
 	}
 
 	// Metodo para calcular el error entre dos matrices
@@ -97,12 +99,16 @@ public class Sel {
 	
 	// Metodo que muestra el resultado 
 	public void mostrarResultado(){
-		
+		if(x == null)
+			System.out.println("No se encontro una solucion");	
+		else
+		{	
 		Double[] resultado = x.getVector();
 		System.out.println("Vector de Resultados:");
 		for(int i = 0; i < dim; i++){
 			
 			System.out.println(resultado[i]);
+		}
 		}
 	}
 	
