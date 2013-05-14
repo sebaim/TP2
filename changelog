@@ -1,5 +1,10 @@
 --emiliano
 --12/05/2013
+	Agregue un mensaje para cuando no hay una solucion
+
+
+--emiliano
+--12/05/2013
 	Arregle el constructor de SEL porque llenaba mal la matriz
 	Modifique MatrizMath para que el Producto(VectorMath) devuelva un VectorMath
 	Agregue la funcion resolver
