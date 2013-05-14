@@ -13,7 +13,7 @@ public class GeneradorCasos {
 
 	private MatrizMath m;
 	private int dim;
-	private VectorMath x;
+	private VectorMath b;
 	
 	public GeneradorCasos(String path) {
 
@@ -35,11 +35,11 @@ public class GeneradorCasos {
 				String[] valoresVect = linea.split(" ");
 				dim = valoresVect.length;
 				
-				this.x = new VectorMath(dim);
+				this.b = new VectorMath(dim);
 			
 				for (int i=0 ; i < valoresVect.length ; i++)
 				{
-					x.agregarValor(i, (double) Integer.parseInt(valoresVect[i]));
+					b.agregarValor(i, (double) Integer.parseInt(valoresVect[i]));
 				}	
 				
 				this.m = new MatrizMath(dim, dim);
@@ -86,7 +86,7 @@ public class GeneradorCasos {
 	            
 	            pw.println(this.dim);
 	            
-	            Double[] vect = this.x.getVector();
+	            Double[] vect = this.b.getVector();
 	            
 	            for( int i=0; i<dim ; i++)
 	            	pw.println(vect[i]);
@@ -113,7 +113,7 @@ public class GeneradorCasos {
 	
 		GeneradorCasos caso = new GeneradorCasos("GCaso1"); 
 		
-		System.out.println(caso.x.toString());
+		System.out.println(caso.b.toString());
 		System.out.println(caso.m.toString());
 		
 		caso.generarCaso("Caso1");
