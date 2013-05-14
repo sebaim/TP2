@@ -128,7 +128,7 @@ public class Sel {
 	}
 
 	// Metodo que muestra el resultado
-	public void mostrarResultado() {
+	private void mostrarResultado() {
 		if (x == null)
 			System.out.println("No se encontro una solucion");
 		else {
@@ -153,6 +153,7 @@ public class Sel {
 		} else {
 
 			System.out.println("Incógnitas encontradas con un error pequeño.");
+			this.mostrarResultado();
 			return true;
 		}
 	}
@@ -160,8 +161,7 @@ public class Sel {
 	public static void main(String[] args) {
 
 		Sel s = new Sel("SEL");
-		s.resolver();
-		s.mostrarResultado();
+		s.resolver();		
 		s.test();
 
 	}
