@@ -110,7 +110,7 @@ public class VectorMath {
 	}
 	
 	//resta
-	private VectorMath resta(VectorMath v) {
+	public VectorMath resta(VectorMath v) {
 
 		if (this.vector.length != v.vector.length) 
 			return null;

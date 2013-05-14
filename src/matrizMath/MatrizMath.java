@@ -34,7 +34,7 @@ public class MatrizMath {
 
 	// crea matriz identidad
 
-	private MatrizMath identidad() {
+	public MatrizMath identidad() {
 		if (!this.cuadrada())
 			return null;
 		MatrizMath identidad = new MatrizMath(this.filas, this.columnas);
@@ -442,11 +442,12 @@ public class MatrizMath {
 
 		resultado.inicializa();
 
-		for (int f = 0; f < resultado.filas; f++) {
-			for (int c = 0; c < resultado.columnas; c++) {
-				for (int k = 0; k < this.columnas; k++)
-					resultado.matriz[f][c] += this.matriz[f][k]
-							* m.matriz[k][c];
+		for (int i = 0; i < this.filas; i++) {
+			for (int j = 0; j < this.filas; j++) {
+				for (int k = 0; k < this.filas; k++){
+					resultado.matriz[i][j] += this.matriz[i][k]
+							* m.matriz[k][j];
+				}
 			}
 		}
 
