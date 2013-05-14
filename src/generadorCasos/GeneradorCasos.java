@@ -116,7 +116,7 @@ public class GeneradorCasos {
 		System.out.println(caso.b.toString());
 		System.out.println(caso.m.toString());
 		
-		caso.generarCaso("Caso1");
+		caso.generarCaso("Caso1"); 
 		
 		
 	} 
