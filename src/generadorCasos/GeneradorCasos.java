@@ -119,7 +119,7 @@ public class GeneradorCasos {
 		caso.generarCaso("Caso1");
 		
 		
-	}
+	} 
 
 	
 }
