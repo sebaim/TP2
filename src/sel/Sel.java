@@ -17,7 +17,7 @@ public class Sel {
 
 	private Double error;
 
-	final private double EPSILON = 1 * Math.pow(10, -12);
+	final static public double EPSILON = 1 * Math.pow(10, -12);
 
 	public Sel(String path) {
 

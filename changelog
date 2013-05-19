@@ -1,3 +1,20 @@
+--sebastian
+--19/05/2013
+	Programa probador que genera matrices al azar, calcula inversa y comprueba si esta bien, teniendo en cuenta un error
+	de EPSILON.	
+	Agregue casos de prueba con fix Caso 13 no anda todavia (tiene que saber cuando reacomodar filas)
+	1	1	0
+	1	1	1
+	0	1	1
+
+--sebastian
+--19/05/2013
+	Agregue caso de prueba que fallaba y fix (matriz9)
+	1.0       1.0     1.0		
+    0.0       0.0     2.0		
+    1.0       0.0     1.0
+	
+
 --emiliano
 --12/05/2013
 	Agregue un mensaje para cuando no hay una solucion
