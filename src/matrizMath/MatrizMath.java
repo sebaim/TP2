@@ -1,9 +1,12 @@
 package matrizMath;
 
+import java.math.*;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
+import java.util.Arrays;
+
 import vectorMath.VectorMath;
 
 public class MatrizMath {
@@ -31,7 +34,7 @@ public class MatrizMath {
 
 	// crea matriz identidad
 
-	public MatrizMath identidad() {
+	private MatrizMath identidad() {
 		if (!this.cuadrada())
 			return null;
 		MatrizMath identidad = new MatrizMath(this.filas, this.columnas);
@@ -97,13 +100,7 @@ public class MatrizMath {
 		}
 		// busco la matriz identidad
 		MatrizMath identidad = this.identidad();
-		Double[][] aux = new Double[this.filas][ this.columnas];
-		for(int i=0; i< this.filas; i++){
-			for(int j=0; j< this.columnas; j++){
-				
-				aux[i][j] = matriz[i][j];
-			}
-		}
+
 		// comparo cada fila con cada fila de la matriz identidad y si es igual
 		// las acomodo
 		for (int fm = 0; fm < this.filas; fm++) {
@@ -179,14 +176,6 @@ public class MatrizMath {
 			filapivot++;
 		}
 
-		this.matriz = new Double[this.filas][ this.columnas];
-		for(int i=0; i< this.filas; i++){
-			for(int j=0; j< this.columnas; j++){
-				
-				matriz[i][j] = aux[i][j];
-			}
-		}
-		
 		return identidad;
 
 	}
@@ -245,7 +234,7 @@ public class MatrizMath {
 					} else {
 
 						System.out
-								.println("ERROR: Se tienen mas datos de lo establecido.");
+								.println("ERROR: Se tienen m�s datos de lo establecido.");
 						return;
 					}
 
@@ -286,15 +275,14 @@ public class MatrizMath {
 		}
 
 	}
-
-	public void setValor(int fila, int columna, Double valor) {
-
-		if (fila >= 0 && columna >= 0 && fila < this.filas
-				&& columna < this.columnas) {
-
+	
+	public void setValor(int fila, int columna, Double valor){
+		
+		if ( fila >= 0 && columna >= 0 && fila < this.filas && columna < this.columnas){
+			
 			this.matriz[fila][columna] = new Double(valor);
 		}
-
+		
 	}
 
 	/*
@@ -430,13 +418,13 @@ public class MatrizMath {
 			for (int c = 0; c < this.columnas; c++)
 				resultado.matriz[f][0] += this.matriz[f][c] * v.getVector()[c];
 		}
-
+		
 		VectorMath vectorResultado = new VectorMath(this.filas);
-
+		
 		for (int f = 0; f < this.filas; f++) {
 			vectorResultado.agregarValor(f, resultado.matriz[f][0]);
 		}
-
+		
 		return vectorResultado;
 
 	}
@@ -453,12 +441,11 @@ public class MatrizMath {
 
 		resultado.inicializa();
 
-		for (int i = 0; i < this.filas; i++) {
-			for (int j = 0; j < this.filas; j++) {
-				for (int k = 0; k < this.filas; k++) {
-					resultado.matriz[i][j] += this.matriz[i][k]
-							* m.matriz[k][j];
-				}
+		for (int f = 0; f < resultado.filas; f++) {
+			for (int c = 0; c < resultado.columnas; c++) {
+				for (int k = 0; k < this.columnas; k++)
+					resultado.matriz[f][c] += this.matriz[f][k]
+							* m.matriz[k][c];
 			}
 		}
 

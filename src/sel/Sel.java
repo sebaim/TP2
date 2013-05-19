@@ -160,10 +160,6 @@ public class Sel {
 
 	public static void main(String[] args) {
 
-		Sel s = new Sel("SEL6");
-		s.resolver();		
-		s.test();
-
 		Sel s = new Sel("SEL2");
 		s.resolver();		
 		s.test();
