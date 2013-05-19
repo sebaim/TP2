@@ -79,11 +79,11 @@ public class MatrizMath {
 		this.matriz[fila2] = l1;
 	}
 
-	private boolean comparoFilasIguales(Double[] a, Double[] b) {
+	private boolean comparoFilasMatrizConFilasIdentidad(Double[] a, Double[] b, int fi) {
 		int ind = 0;
 		// boolean es_igual = true;
 
-		while (ind < a.length && Double.compare(a[ind], b[ind]) == 0)
+		while (fi == ind || ind < a.length && Double.compare(a[ind], b[ind]) == 0)
 			ind++;
 
 		return ind == a.length;
@@ -105,14 +105,15 @@ public class MatrizMath {
 		// las acomodo
 		for (int fm = 0; fm < this.filas; fm++) {
 			for (int fi = 0; fi < this.filas; fi++) {
-				if (comparoFilasIguales(this.matriz[fm],
-						this.identidad().matriz[fi])) {
+				if (comparoFilasMatrizConFilasIdentidad(this.matriz[fm], this.identidad().matriz[fi],fi)) {
 					this.inviertoFilas(fm, fi);
 					identidad.inviertoFilas(fm, fi);
 				}
 			}
 
 		}
+		
+		
 
 		int filapivot = 0;
 		for (int c = 0; c < this.columnas; c++) {
@@ -589,14 +590,18 @@ public class MatrizMath {
 
 		// ejemplo 7 caso no se puede resolver (det 0)
 		MatrizMath m7 = new MatrizMath("matriz7.in");
+		
+		// ejemplo 8 matriz 4x3
+		MatrizMath m8 = new MatrizMath("matriz8.in");
 
 		// VectorMath v1 = new VectorMath("vector1.in");
 
 		// System.out.println(m1);
 		// System.out.println(m1.normaDos());
 		// System.out.println(m3.identidad());
-		System.out.println(m4.determinante());
-		System.out.println(m4.inversa());
+		System.out.println(m5.determinante());
+		System.out.println(m5.inversa());
+		System.out.println(m5.producto(m5.inversa()));
 
 		// System.out.println(m6);
 		// System.out.println(m6.adjunto(0, 0));

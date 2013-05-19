@@ -109,7 +109,7 @@ public class Sel {
 
 	public static void main(String[] args) {
 		
-		Sel s = new Sel("SEL2");
+		Sel s = new Sel("SEL6");
 		s.resolver();
 		s.mostrarResultado();
 		
