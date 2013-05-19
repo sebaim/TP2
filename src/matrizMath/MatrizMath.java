@@ -1,11 +1,9 @@
 package matrizMath;
 
-import java.math.*;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
-import java.util.Arrays;
 
 import vectorMath.VectorMath;
 
@@ -34,7 +32,7 @@ public class MatrizMath {
 
 	// crea matriz identidad
 
-	private MatrizMath identidad() {
+	public MatrizMath identidad() {
 		if (!this.cuadrada())
 			return null;
 		MatrizMath identidad = new MatrizMath(this.filas, this.columnas);
@@ -591,17 +589,20 @@ public class MatrizMath {
 		
 		// ejemplo 8 matriz 4x3
 		MatrizMath m8 = new MatrizMath("matriz8.in");
+		
+		// ejemplo 9 matriz caso falla
+		MatrizMath m9 = new MatrizMath("matriz9.in");
 
 		// VectorMath v1 = new VectorMath("vector1.in");
 
 		// System.out.println(m1);
 		// System.out.println(m1.normaDos());
 		// System.out.println(m3.identidad());
-		System.out.println(m4);
-		System.out.println(m5.determinante());
-		System.out.println(m5.inversa());
-		System.out.println(m5.producto(m5.inversa()));
-		System.out.println(m4);
+		System.out.println(m9);
+		System.out.println(m9.determinante());
+		System.out.println(m9.inversa());
+		System.out.println(m9.producto(m9.inversa()));
+		//System.out.println(m4);
 
 		// System.out.println(m6);
 		// System.out.println(m6.adjunto(0, 0));

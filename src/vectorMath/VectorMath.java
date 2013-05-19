@@ -110,7 +110,7 @@ public class VectorMath {
 	}
 	
 	//resta
-	private VectorMath resta(VectorMath v) {
+	public VectorMath resta(VectorMath v) {
 
 		if (this.vector.length != v.vector.length) 
 			return null;
@@ -160,7 +160,7 @@ public class VectorMath {
 	}
 	
 	//norma
-	private Double normaUno ()
+	private Double normaUno()
 	{
 		Double resultado = new Double(0);
 		for (int i =0; i < this.vector.length; i++)
