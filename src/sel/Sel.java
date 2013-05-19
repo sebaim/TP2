@@ -16,8 +16,8 @@ public class Sel {
 	private VectorMath x, b;
 
 	private Double error;
-	
-	final private double epsilon = 1 * Math.pow(10, -12);
+
+	final private double EPSILON = 1 * Math.pow(10, -12);
 
 	public Sel(String path) {
 
@@ -53,15 +53,15 @@ public class Sel {
 				this.m = new MatrizMath(dim, dim);
 
 				// Se llena la matriz con los valores del archivo de entrada
-				int contFila = 0;
+
 				while ((linea = br.readLine()) != null) {
 
 					String[] valores = linea.split(" ");
-					for(int col = 0 ; col < valores.length ; col++)
-					m.setValor(contFila,
-							col,
-							Double.parseDouble(valores[col]));
-					contFila++;
+
+					m.setValor(Integer.parseInt(valores[0]),
+							Integer.parseInt(valores[1]),
+							Double.parseDouble(valores[2]));
+
 				}
 
 			}
@@ -83,35 +83,90 @@ public class Sel {
 	}
 
 	public void resolver() {
-		MatrizMath inversa = this.m.inversa();
-		this.x= inversa.producto(b);		
+
+		this.error = EPSILON;
+		
+		// calculo de la inversa de M
+		MatrizMath Minversa = this.m.inversa();
+		if (Minversa != null) {
+
+			// Se calcula la matriz identidad I'
+			MatrizMath Iprima = this.m.producto(Minversa);
+
+			this.error = calcularErrorSolucion(this.m.identidad(), Iprima).doubleValue();
+			if ( this.error >= EPSILON) {
+
+				return;
+			}
+
+			// Se calcula el vector X'
+			VectorMath Xprima = Minversa.producto(b);
+
+			// Se calcula el vector B'
+			VectorMath Bprima = m.producto(Xprima);
+
+			// Se calcula el error || B - B' ||2
+			this.error = calcularErrorSolucion(this.b, Bprima).doubleValue();
+
+			// El resultado X se le asigna al calculado X'
+			this.x = Xprima;
+		}
 	}
 
 	// Metodo para calcular el error entre dos matrices
-	private Double calcularErrorSolucion(MatrizMath m1, MatrizMath m2){
-		
+	private Double calcularErrorSolucion(MatrizMath m1, MatrizMath m2) {
+
 		MatrizMath restaMatrices = m1.resta(m2);
 		return restaMatrices.normaDos();
-		
+
 	}
-	
-	// Metodo que muestra el resultado 
-	public void mostrarResultado(){
-		
-		Double[] resultado = x.getVector();
-		System.out.println("Vector de Resultados:");
-		for(int i = 0; i < dim; i++){
-			
-			System.out.println(resultado[i]);
+
+	// Metodo para calcular el error entre dos vectores
+	private Double calcularErrorSolucion(VectorMath v1, VectorMath v2) {
+
+		VectorMath restaVectores = v1.resta(v2);
+		return restaVectores.normaDos();
+
+	}
+
+	// Metodo que muestra el resultado
+	private void mostrarResultado() {
+		if (x == null)
+			System.out.println("No se encontro una solucion");
+		else {
+			Double[] resultado = x.getVector();
+			System.out.println("Vector de Resultados:");
+			for (int i = 0; i < dim; i++) {
+
+				System.out.println(resultado[i]);
+			}
 		}
 	}
-	
+
+	/*
+	 * Testea si el error es muy grande
+	 */
+	public boolean test() {
+
+		if (this.error >= EPSILON) {
+
+			return false;
+		} else {
+
+			this.mostrarResultado();
+			return true;
+		}
+	}
 
 	public static void main(String[] args) {
-		
+
 		Sel s = new Sel("SEL6");
-		s.resolver();
-		s.mostrarResultado();
-		
+		s.resolver();		
+		s.test();
+
+		Sel s = new Sel("SEL2");
+		s.resolver();		
+		s.test();
+
 	}
 }

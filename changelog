@@ -1,3 +1,18 @@
+--sebastian
+--18/05/2013
+	Agregue y arregle un caso que fallaba (matriz9):
+	1.0       1.0     1.0		
+    0.0       0.0     2.0		
+    1.0       0.0     1.0
+
+--sebastian
+--18/05/2013
+	Agregue casos de prueba para SEL: Caso 6 falla:	
+--emiliano
+--12/05/2013
+	Agregue un mensaje para cuando no hay una solucion
+
+
 --emiliano
 --12/05/2013
 	Arregle el constructor de SEL porque llenaba mal la matriz
