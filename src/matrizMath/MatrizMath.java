@@ -44,7 +44,7 @@ public class MatrizMath {
 		
 		for (int f=0; f< this.columnas; f++)
 			for (int c=0; c < this.columnas ; c++)
-				this.setValor(f, c, (double) random.nextInt(2)); 		
+				this.setValor(f, c, (double) random.nextInt(20)); 		
 				
 	}
 	
@@ -99,21 +99,34 @@ public class MatrizMath {
 		int ind = 0;
 		// boolean es_igual = true;
 
-		while (fi == ind || ind < a.length && Double.compare(a[ind], b[ind]) == 0)
+		while ( ind < a.length && Double.compare(a[ind], b[ind]) == 0)
 			ind++;
 
 		return ind == a.length;
 
+	}	 
+	
+	private boolean comparaValores (double v1, double v2)
+	{
+		return (Math.abs(v1-v2)) < Sel.EPSILON;
 	}
 
 	// matriz inversa
 	public MatrizMath inversa() {
 		// si el determinante es 0 la matriz no se puede invertir
-		if (this.determinante() == 0) {
-			System.out
-					.println("La matriz no se puede invertir, su determinante es 0");
+		
+		if (!this.cuadrada()) 
+		{
+			System.out.println("La matriz no es cuadrada");
 			return null;
 		}
+		
+		if (this.determinante() == 0) 
+		{
+			System.out.println("La matriz no se puede invertir, su determinante es 0 ");
+			return null;
+		}
+		
 		// busco la matriz identidad
 		MatrizMath identidad = this.identidad();
 		
@@ -132,7 +145,6 @@ public class MatrizMath {
 					identidad.inviertoFilas(fm, fi);
 				}
 			}
-
 		}
 
 		int filapivot = 0;
@@ -141,9 +153,9 @@ public class MatrizMath {
 
 			double pivot = this.matriz[filapivot][c];
 			// si el pivot es 0 tengo que calcular el 1 desde alguna otra fila
-			if (pivot == 0) {
-				int linea = 0;
-				while (linea < this.filas && this.matriz[linea][c] == 0)
+			if (comparaValores(pivot,0)) {
+				int linea = filapivot;
+				while (linea < this.filas && comparaValores(this.matriz[linea][c], 0))
 					linea++;
 				if (linea < this.filas) {
 
@@ -160,7 +172,7 @@ public class MatrizMath {
 				}
 
 			} else {
-				if (pivot != 1) {
+				if (!comparaValores(pivot,1)) {
 					// obtengo el numero a dividir para que quede uno
 					double operador = 1 / pivot;
 
@@ -175,19 +187,30 @@ public class MatrizMath {
 				// quede en 0
 				if (fila != filapivot) {
 					double valor = this.matriz[fila][c];
-					if (valor != 0) // si es cero no hago nada
+					if (!comparaValores(valor, 0)) // si es cero no hago nada
 					{
 						// multiplico el 1 del pivot por el numero que necesite
 						// y resto las filas
-						Double[] lineaARestarM = this.productoLinea(valor,
-								filapivot);
-						Double[] lineaARestarI = identidad.productoLinea(valor,
-								filapivot);
+						Double[] lineaARestarM = this.productoLinea(valor,filapivot);
+						Double[] lineaARestarI = identidad.productoLinea(valor,filapivot);
 
-						this.matriz[fila] = this
-								.restaLinea(lineaARestarM, fila);
-						identidad.matriz[fila] = identidad.restaLinea(
-								lineaARestarI, fila);
+						this.matriz[fila] = this.restaLinea(lineaARestarM, fila);
+						identidad.matriz[fila] = identidad.restaLinea(lineaARestarI, fila);
+						
+						// comparo cada fila con cada fila de la matriz identidad y si es igual
+						// las acomodo
+						boolean inverti = false;
+						for (int fm = 0; fm < this.filas; fm++) {
+							for (int fi = 0; fi < this.filas; fi++) {
+								if (fi!= fm && comparoFilasMatrizConFilasIdentidad(this.matriz[fm], this.identidad().matriz[fi],fi)) {
+									this.inviertoFilas(fm, fi);
+									identidad.inviertoFilas(fm, fi);
+									inverti = true;
+								}
+							}
+						}
+						if (inverti)
+							fila--;
 					}
 				}
 				fila++;
@@ -195,7 +218,7 @@ public class MatrizMath {
 			filapivot++;
 		}
 		
-		System.out.println("Matriz original llevada a inversa:");
+		System.out.println("Matriz original llevada a identidad:");
 		System.out.println(this);
 
 		this.matriz = new Double[this.filas][ this.columnas];
@@ -369,6 +392,7 @@ public class MatrizMath {
 			for (int x = 0; x < this.getColumnas(); x++) {
 
 				cadena.append(String.format("%10.3f", matriz[y][x]));
+				
 				cadena.append("\t\t");
 			}
 			cadena.append("\n");
@@ -561,10 +585,10 @@ public class MatrizMath {
 	// adjunto
 	MatrizMath adjunto(int fila, int col) {
 		MatrizMath adjunto = new MatrizMath(this.filas - 1, this.columnas - 1);
-		adjunto.inicializa();
+		//adjunto.inicializa();
 		int fa = 0;
 		int ca = 0;
-
+		
 		for (int f = 0; f < this.filas; f++) {
 			ca = 0;
 			if (f != fila) {
@@ -585,6 +609,9 @@ public class MatrizMath {
 	 */
 	public Double determinante() {
 
+		if (!this.cuadrada())
+			return null;
+		
 		if (this.filas == 2)
 			return (this.matriz[0][0] * this.matriz[1][1] - this.matriz[0][1]
 					* this.matriz[1][0]);
@@ -592,8 +619,7 @@ public class MatrizMath {
 		double determinante = 0.0;
 
 		for (int c = 0; c < this.columnas; c++) {
-			determinante += this.matriz[0][c]
-					* this.adjunto(0, c).determinante() * (c % 2 == 0 ? 1 : -1);
+			determinante += this.matriz[0][c]* this.adjunto(0, c).determinante() * (c % 2 == 0 ? 1 : -1);
 		}
 		return determinante;
 
@@ -629,17 +655,45 @@ public class MatrizMath {
 		MatrizMath m9 = new MatrizMath("matriz9.in");
 		
 		// ejemplo 10 matriz caso falla
-		MatrizMath m10 = new MatrizMath("matriz9.in");
+		MatrizMath m10 = new MatrizMath("matriz17.in");
 
 		// VectorMath v1 = new VectorMath("vector1.in");
 
 		// System.out.println(m1);
 		// System.out.println(m1.normaDos());
 		// System.out.println(m3.identidad());
-		System.out.println(m10);
-		System.out.println(m10.determinante());
-		System.out.println(m10.inversa());
-		System.out.println(m10.producto(m10.inversa()));
+		
+		for (int i = 1; i< 19 ; i++)
+		{
+			String archivo = String.format("matriz%d.in", i);
+		//String archivo = String.format("matriz8.in");
+			System.out.println(archivo);		
+			
+			m10 = new MatrizMath(archivo);
+			System.out.println("Matriz:");
+			System.out.println(m10);
+			System.out.print("Determinante: ");
+			Double determinante = m10.determinante();
+			System.out.println(determinante);
+			System.out.print("Inversa: ");
+						
+			MatrizMath inversa = m10.inversa();
+			System.out.println(inversa);
+			if (inversa != null)
+			{
+				
+				System.out.println("Matriz x Inversa: ");
+			
+				System.out.println(m10.producto(inversa));			
+			
+				if (m10.producto(inversa).equals(m10.identidad()))
+					System.out.println("Son iguales");
+				else
+					System.out.println("NO Son iguales");
+			}
+		}
+		
+
 		//System.out.println(m4);
 
 		// System.out.println(m6);
@@ -661,5 +715,6 @@ public class MatrizMath {
 
 		// System.out.println(m6.producto(m6.inversa()));
 
-	}
+	}	
+	
 }
