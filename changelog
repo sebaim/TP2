@@ -1,4 +1,9 @@
 --sebastian
+--02/06/2013
+	Nuevos casos que fallaban
+	Agregue nueva forma de calcular determinante
+	Anda rapido con matrices de 50x50
+--sebastian
 --01/06/2013
 	Fix Caso 13 :)  Reacomoda fila despues de cada modificacion
 	Agregue nuevos casos 14, 15, 16, 17, 18 que fallaban
