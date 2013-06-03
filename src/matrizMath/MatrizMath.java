@@ -875,6 +875,7 @@ public class MatrizMath {
 
 		// System.out.println(m4);
 		System.out.println(m4.normaDos());
+		
 		// System.out.println(m4.traspuesta());
 	}
 
