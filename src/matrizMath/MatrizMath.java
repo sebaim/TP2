@@ -238,9 +238,6 @@ public class MatrizMath {
 			filapivot++;
 		}
 		
-		System.out.println("Matriz original llevada a identidad:");
-		System.out.println(this);
-
 		this.matriz = new Double[this.filas][ this.columnas];
 		for(int i=0; i< this.filas; i++){
 			for(int j=0; j< this.columnas; j++){
@@ -421,19 +418,21 @@ public class MatrizMath {
 	 * Override de la funcion equals.
 	 */
 	public boolean equals(MatrizMath m) {
+		
+		return Math.abs(this.resta(m).normaDos()) < Sel.EPSILON;
 
-		if (this.getFilas() != m.getFilas()
-				|| this.getColumnas() != m.getColumnas())
-			return false;
-
-		for (int y = 0; y < this.getFilas(); y++) {
-			for (int x = 0; x < this.getColumnas(); x++) {
-				if (!(Math.abs(this.matriz[y][x] - (m.matriz[y][x]))< 1))
-					return false;
-			}
-		}
-
-		return true;
+//		if (this.getFilas() != m.getFilas()
+//				|| this.getColumnas() != m.getColumnas())
+//			return false;
+//
+//		for (int y = 0; y < this.getFilas(); y++) {
+//			for (int x = 0; x < this.getColumnas(); x++) {
+//				if (!(Math.abs(this.matriz[y][x] - (m.matriz[y][x]))< Sel.EPSILON))
+//					return false;
+//			}
+//		}
+//
+//		return true;
 	}
 
 	public void setFilas(int filas) {

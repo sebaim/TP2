@@ -19,6 +19,15 @@ public class Sel {
 
 	final static public double EPSILON = Math.pow(10, -12);
 
+	
+	public Sel(MatrizMath m, VectorMath x)
+	{
+		this.dim = m.getColumnas();
+		this.m = m;
+		this.b = x;
+		
+	}
+	
 	public Sel(String path) {
 
 		File archivo = null;
@@ -81,6 +90,18 @@ public class Sel {
 			}
 		}
 	}
+	
+	public String toString()
+	{
+		String retorno;
+		retorno = "Matriz:\n" + this.m;
+		retorno +="Vector B:\n" + this.b +"\n";
+		retorno +="Vector X:\n" + this.x +"\n";
+		retorno +="Error: " + this.error + (this.error < EPSILON ? " Correcto": " Incorrecto"); 
+//		System.out.println("Matriz:");
+//		System.out.println(this.m);
+		return retorno;
+	}
 
 	public void resolver() {
 
@@ -93,9 +114,10 @@ public class Sel {
 			// Se calcula la matriz identidad I'
 			MatrizMath Iprima = this.m.producto(Minversa);
 
-			this.error = calcularErrorSolucion(this.m.identidad(), Iprima).doubleValue();
+			MatrizMath Prima = this.m.identidad();
+			
+			this.error = calcularErrorSolucion(Prima, Iprima).doubleValue();
 			if ( this.error >= EPSILON) {
-
 				return;
 			}
 
@@ -115,7 +137,6 @@ public class Sel {
 
 	// Metodo para calcular el error entre dos matrices
 	private Double calcularErrorSolucion(MatrizMath m1, MatrizMath m2) {
-
 		MatrizMath restaMatrices = m1.resta(m2);
 		return restaMatrices.normaDos();
 
@@ -123,7 +144,7 @@ public class Sel {
 
 	// Metodo para calcular el error entre dos vectores
 	private Double calcularErrorSolucion(VectorMath v1, VectorMath v2) {
-
+		
 		VectorMath restaVectores = v1.resta(v2);
 		return restaVectores.normaDos();
 
@@ -137,8 +158,7 @@ public class Sel {
 			Double[] resultado = x.getVector();
 			System.out.println("Vector de Resultados:");
 			for (int i = 0; i < dim; i++) {
-
-				System.out.println(resultado[i]);
+				System.out.printf("%.3f\n",resultado[i]);
 			}
 		}
 	}
@@ -160,9 +180,12 @@ public class Sel {
 
 	public static void main(String[] args) {
 
-		Sel s = new Sel("SEL2");
+		Sel s = new Sel("SEL3");
 		s.resolver();		
-		s.test();
+		if (s.test())
+			System.out.println ("Resultado Correcto");
+		else
+			System.out.println ("Resultado Incorrecto");
 
 	}
 }

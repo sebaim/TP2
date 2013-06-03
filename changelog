@@ -1,5 +1,20 @@
 --sebastian
 --02/06/2013
+	SEL3.in
+	http://www.vitutor.com/algebra/sistemas%20I/gauss.html
+		3 + 2 + 1 = 1
+		5 + 3 + 4 = 2
+		1 + 1 -1  = 1
+		Solucion -4 6 1 
+	SEL4.in
+		http://www.vitutor.com/algebra/sistemas%20I/problemas.html
+		1 + 1+ 1 = 500
+		1 +1 -1 = 60
+		6/100+12/100+30/100 = 92.4
+		Solucion X= 120 Y= 160 Z= 220 (Resuelve Correctamente)
+	
+--sebastian
+--02/06/2013
 	Nuevos casos que fallaban
 	Agregue nueva forma de calcular determinante
 	Anda rapido con matrices de 50x50

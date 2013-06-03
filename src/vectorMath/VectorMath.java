@@ -14,6 +14,7 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.util.Arrays;
+import java.util.Random;
 
 import matrizMath.MatrizMath;
 
@@ -94,6 +95,21 @@ public class VectorMath {
 			
 			this.vector[pos] = new Double(valor);
 		}
+	}
+	
+	//genera vector aleatorio
+	public void generaVectorAleatorio ()
+	{
+		Random random = new Random();
+		//int dim = random.nextInt(10);
+				
+		//MatrizMath matrizPrueba = new MatrizMath(dim,dim);
+		//this.inicializa();
+		
+		for (int i=0; i < this.vector.length; i++)
+			this.vector[i] = (double) random.nextInt(30);
+				//this.setValor(f, c, (double) random.nextInt(30)); 		
+				
 	}
 
 	//suma
