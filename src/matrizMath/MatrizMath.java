@@ -615,28 +615,26 @@ public class MatrizMath {
 	/*
 	 * Norma dos de una matriz:
 	 * 
-	 * Su formula es ||A||_2 = sqrt( P ( A * Atraspuesta ) )
+	 * Su formula es para matrices simetricas 
+	 * ||A||_2 = max{ | Li(A) | }
 	 * 
-	 * donde P = mayor valor de una matriz
+	 * donde Li(A) = son los autovalores de A
 	 */
 	public Double normaDos() {
-
-		MatrizMath productoIntermedio = this.producto(this.traspuesta());
 
 		Double valorMayor = this.matriz[0][0];
 		for (int i = 0; i < this.filas; i++) {
 			for (int j = 0; j < this.columnas; j++) {
 
-				if (productoIntermedio.matriz[i][j] > valorMayor) {
+				if (this.matriz[i][j] > valorMayor) {
 
-					valorMayor = productoIntermedio.matriz[i][j];
+					valorMayor = this.matriz[i][j];
 				}
 			}
 
 		}
 
-		valorMayor = Math.abs(valorMayor);
-		return Math.sqrt(valorMayor);
+		return Math.abs(valorMayor);
 
 	}
 
