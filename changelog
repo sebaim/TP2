@@ -1,4 +1,26 @@
 --sebastian
+--16/06/2013
+	Agregue casos de SEL, pregunto en comprobar el error si es >1, ya que >epsilon a veces falla
+	Cambie norma 2 como dijo el profe.
+	El programa probador genera un input.
+	El output se salva en un archivo
+	TODO: Hacer los outputs esperados, hay que hacer un programa comparador?
+	SEL6.in => caso 4 x 4 
+	http://www.wolframalpha.com/input/?i=-5w%2B2x+-4y+-5z%3D54%2C+-1w%2B2x-2y%2B8z%3D-37%2C-6w%2B7x%2B5y-3z%3D2%2C8w-4x%2B2y%2B4z%3D-50
+	-5w+2x -4y -5z=54, 
+	-1w+2x-2y+8z=-37,
+	-6w+7x+5y-3z=2,
+	8w-4x+2y+4z=-50
+	
+	SEL7.in => caso 5 x 5
+	http://www.wolframalpha.com/input/?i=3a-9w%2B5x%2B2y%2B2z%3D-15%2C9a-+3w-8x-2y%2B4z%3D69%2C-5a%2B4w%2B4x%2B2y%2B6z%3D+-80%2C4a%2B7w%2B7x%2B5y%2B8z%3D-112%2C+4a%2B4w%2B5x%2B1y%2B5z+%3D+-59
+	3a-9w+5x+2y+2z=-15,
+	9a- 3w-8x-2y+4z=69,
+	-5a+4w+4x+2y+6z= -80,
+	4a+7w+7x+5y+8z=-112, 
+	4a+4w+5x+1y+5z = -59
+	
+--sebastian
 --02/06/2013
 	SEL3.in
 	http://www.vitutor.com/algebra/sistemas%20I/gauss.html

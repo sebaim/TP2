@@ -43,7 +43,7 @@ public class MatrizMath {
 
 		for (int f = 0; f < this.columnas; f++)
 			for (int c = 0; c < this.columnas; c++)
-				this.setValor(f, c, (double) random.nextInt(30));
+				this.setValor(f, c, random.nextInt(30)*random.nextDouble());
 
 	}
 
@@ -127,18 +127,12 @@ public class MatrizMath {
 
 	// matriz inversa
 	public MatrizMath inversa() {
-		// si el determinante es 0 la matriz no se puede invertir
+		
 
 		if (!this.cuadrada()) {
 			System.out.println("La matriz no es cuadrada");
 			return null;
 		}
-
-		// if ( comparaDeterminantes(this.determinante2(), 0))
-		// {
-		// System.out.println("La matriz no se puede invertir, su determinante es 0 ");
-		// return null;
-		// }
 
 		// busco la matriz identidad
 		MatrizMath identidad = this.identidad();
@@ -432,7 +426,9 @@ public class MatrizMath {
 	 */
 	public boolean equals(MatrizMath m) {
 
-		return Math.abs(this.resta(m).normaDos()) < Sel.EPSILON;
+		double error = Math.abs(this.resta(m).normaDos());
+		System.out.printf ("Error: \n%.30f\n%.30f\n%.30f\n%.30f",this.identidad().normaDos(), m.normaDos(),error,this.identidad().normaDos()- m.normaDos());
+		return error < Sel.EPSILON;
 
 		// if (this.getFilas() != m.getFilas()
 		// || this.getColumnas() != m.getColumnas())
@@ -596,21 +592,21 @@ public class MatrizMath {
 		return aux;
 	}
 
-	public MatrizMath traspuesta() {
-
-		MatrizMath resultado = new MatrizMath(this.filas, this.columnas);
-
-		for (int i = 0; i < this.filas; i++) {
-			for (int j = 0; j < this.columnas; j++) {
-
-				resultado.matriz[j][i] = this.matriz[i][j];
-
-			}
-
-		}
-
-		return resultado;
-	}
+//	public MatrizMath traspuesta() {
+//
+//		MatrizMath resultado = new MatrizMath(this.filas, this.columnas);
+//
+//		for (int i = 0; i < this.filas; i++) {
+//			for (int j = 0; j < this.columnas; j++) {
+//
+//				resultado.matriz[j][i] = this.matriz[i][j];
+//
+//			}
+//
+//		}
+//
+//		return resultado;
+//	}
 
 	/*
 	 * Norma dos de una matriz:
@@ -619,24 +615,27 @@ public class MatrizMath {
 	 * 
 	 * donde P = mayor valor de una matriz
 	 */
-	public Double normaDos() {
+	public double normaDos() {
 
-		MatrizMath productoIntermedio = this.producto(this.traspuesta());
-
-		Double valorMayor = this.matriz[0][0];
+		//MatrizMath productoIntermedio = this.producto(this.traspuesta());
+		
+ 		double valorMayor = this.matriz[0][0];
+ 		double valorMenor = this.matriz[0][0];
+ 		
 		for (int i = 0; i < this.filas; i++) {
 			for (int j = 0; j < this.columnas; j++) {
 
-				if (productoIntermedio.matriz[i][j] > valorMayor) {
-
-					valorMayor = productoIntermedio.matriz[i][j];
-				}
+				if (this.matriz[i][j] > valorMayor)
+					valorMayor = this.matriz[i][j];
+				if (this.matriz[i][j] < valorMenor)
+					valorMenor = this.matriz[i][j];
+					
 			}
 
 		}
 
-		valorMayor = Math.abs(valorMayor);
-		return Math.sqrt(valorMayor);
+		//valorMayor = Math.abs(valorMayor);
+		return Math.pow(valorMayor-valorMenor,2);
 
 	}
 
@@ -777,80 +776,44 @@ public class MatrizMath {
 
 		// ejemplo 1 (inversa)
 		MatrizMath m1 = new MatrizMath("matriz1.in");
+		MatrizMath mIdentidad = new MatrizMath(m1.filas, m1.columnas);
+		
+		 for (int i = 1; i < 23; i++) {
+		 String archivo = String.format("matriz%d.in", i);
+		// String archivo = String.format("matriz10.in");
+		 System.out.println(archivo);
+		
+		 m1 = new MatrizMath(archivo);
+		 mIdentidad = m1.identidad();
+		 if (mIdentidad != null)
+			 System.out.println(m1.identidad().normaDos());
 
-		// ejemplo 2 (inversa)
-		MatrizMath m2 = new MatrizMath("matriz2.in");
-
-		// ejemplo 3 (inversa)
-		MatrizMath m3 = new MatrizMath("matriz3.in");
-
-		// ejemplo 4 caso 4 x 4
-		MatrizMath m4 = new MatrizMath("matriz4.in");
-
-		// ejemplo 5 caso que fallaba
-		MatrizMath m5 = new MatrizMath("matriz5.in");
-
-		// ejemplo 6 caso determinante en matriz 5x5
-		MatrizMath m6 = new MatrizMath("matriz6.in");
-
-		// ejemplo 7 caso no se puede resolver (det 0)
-		MatrizMath m7 = new MatrizMath("matriz7.in");
-
-		// ejemplo 8 matriz 4x3
-		MatrizMath m8 = new MatrizMath("matriz8.in");
-
-		// ejemplo 9 matriz caso falla
-		MatrizMath m9 = new MatrizMath("matriz9.in");
-
-		// ejemplo 10 matriz caso falla
-		MatrizMath m10 = new MatrizMath("matriz17.in");
-
-		// VectorMath v1 = new VectorMath("vector1.in");
-
-		// System.out.println(m1);
-		// System.out.println(m1.normaDos());
-		// System.out.println(m3.identidad());
-
-		// for (int i = 1; i < 20; i++) {
-		// String archivo = String.format("matriz%d.in", i);
-		// // String archivo = String.format("matriz21.in");
-		// System.out.println(archivo);
+		 System.out.println("Matriz:");
+		 System.out.println(m1);
+		 System.out.print("Determinante: ");
+		 //Double determinante = m10.determinanteObsoleto();
+		 Double det2 = m1.determinante2();
 		//
-		// m10 = new MatrizMath(archivo);
-		// System.out.println("Matriz:");
-		// System.out.println(m10);
-		// System.out.print("Determinante: ");
-		// Double determinante = m10.determinanteObsoleto();
-		// Double det2 = m10.determinante2();
-		// if (determinante != null) {
-		// if (comparaDeterminantes(determinante, det2))
-		// System.out.println("El determinante es correcto");
-		// else {
-		// System.out.println("El determinante NO es correcto");
-		// break;
-		// }
-		// }
-		//
-		// System.out.println(determinante);
-		// System.out.println(det2);
-		// System.out.print("Inversa: ");
-		//
-		// MatrizMath inversa = m10.inversa();
-		// System.out.println(inversa);
-		// if (inversa != null) {
-		//
-		// System.out.println("Matriz x Inversa: ");
-		//
-		// System.out.println(m10.producto(inversa));
-		//
-		// if (m10.producto(inversa).equals(m10.identidad()))
-		// System.out.println("Son iguales");
-		// else {
-		// System.out.println("NO Son iguales");
-		// break;
-		// }
-		// }
-		// }
+		 
+		 System.out.println(det2);
+		 System.out.print("Inversa: ");
+		
+		 MatrizMath inversa = m1.inversa();
+		 System.out.println(inversa);
+		 if (inversa != null) {
+		
+		 System.out.println("Matriz x Inversa: ");
+		
+		 System.out.println(m1.producto(inversa));
+		
+		 if (m1.producto(inversa).equals(m1.identidad()))
+		 System.out.println("Son iguales");
+		 else {
+		 System.out.println("NO Son iguales");
+		 break;
+		 }
+		 }
+		 }
 
 		// System.out.println(m4);
 
@@ -874,7 +837,7 @@ public class MatrizMath {
 		// System.out.println(m6.producto(m6.inversa()));
 
 		// System.out.println(m4);
-		System.out.println(m4.normaDos());
+		//System.out.println(m4.normaDos());
 		
 		// System.out.println(m4.traspuesta());
 	}

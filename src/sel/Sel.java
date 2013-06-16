@@ -1,8 +1,12 @@
 package sel;
 
 import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.PrintWriter;
 
 import vectorMath.VectorMath;
 import matrizMath.MatrizMath;
@@ -19,17 +23,20 @@ public class Sel {
 
 	final static public double EPSILON = Math.pow(10, -12);
 
-	
-	public Sel(MatrizMath m, VectorMath x)
-	{
+	private String path;
+
+	public Sel(MatrizMath m, VectorMath x) {
 		this.dim = m.getColumnas();
 		this.m = m;
 		this.b = x;
-		
+		path = "prueba";
 	}
-	
+
 	public Sel(String path) {
 
+		this.path = path.substring(path.indexOf('/')+1);
+
+		
 		File archivo = null;
 		FileReader fr = null;
 		BufferedReader br = null;
@@ -90,23 +97,23 @@ public class Sel {
 			}
 		}
 	}
-	
-	public String toString()
-	{
+
+	public String toString() {
 		String retorno;
 		retorno = "Matriz:\n" + this.m;
-		retorno +="Vector B:\n" + this.b +"\n";
-		retorno +="Vector X:\n" + this.x +"\n";
-		retorno +="Error: " + this.error + (this.error < EPSILON ? " Correcto": " Incorrecto"); 
-//		System.out.println("Matriz:");
-//		System.out.println(this.m);
+		retorno += "Vector B:\n" + this.b + "\n";
+		retorno += "Vector X:\n" + this.x + "\n";
+		retorno += "Error: " + this.error
+				+ (this.error < 1 ? " Correcto" : " Incorrecto");
+		// System.out.println("Matriz:");
+		// System.out.println(this.m);
 		return retorno;
 	}
 
 	public void resolver() {
 
-		this.error = EPSILON;
-		
+		//this.error = EPSILON;
+
 		// calculo de la inversa de M
 		MatrizMath Minversa = this.m.inversa();
 		if (Minversa != null) {
@@ -115,9 +122,9 @@ public class Sel {
 			MatrizMath Iprima = this.m.producto(Minversa);
 
 			MatrizMath Prima = this.m.identidad();
-			
+
 			this.error = calcularErrorSolucion(Prima, Iprima).doubleValue();
-			if ( this.error >= EPSILON) {
+			if (this.error >= EPSILON) {
 				return;
 			}
 
@@ -133,6 +140,7 @@ public class Sel {
 			// El resultado X se le asigna al calculado X'
 			this.x = Xprima;
 		}
+
 	}
 
 	// Metodo para calcular el error entre dos matrices
@@ -144,7 +152,7 @@ public class Sel {
 
 	// Metodo para calcular el error entre dos vectores
 	private Double calcularErrorSolucion(VectorMath v1, VectorMath v2) {
-		
+
 		VectorMath restaVectores = v1.resta(v2);
 		return restaVectores.normaDos();
 
@@ -158,7 +166,7 @@ public class Sel {
 			Double[] resultado = x.getVector();
 			System.out.println("Vector de Resultados:");
 			for (int i = 0; i < dim; i++) {
-				System.out.printf("%.3f\n",resultado[i]);
+				System.out.printf("%.20f\n", resultado[i]);
 			}
 		}
 	}
@@ -166,26 +174,135 @@ public class Sel {
 	/*
 	 * Testea si el error es muy grande
 	 */
-	public boolean test() {
+	public int test() {
+			
 
-		if (this.error >= EPSILON) {
+		if (this.error== null || this.error >= 1) {
 
-			return false;
+			generarOut(false);			
+			return this.error == null ?2:0;
 		} else {
 
+			generarOut(true);
 			this.mostrarResultado();
-			return true;
+			return 1;
+		}
+	}
+	
+	public void generaInput()
+	{
+
+		File archivo = null;
+		FileWriter fw = null;
+		PrintWriter pw = null;
+
+		try {
+			archivo = new File("src/sel/InputGenerado/" + "Input" + ".in");
+			fw = new FileWriter(archivo);
+			pw = new PrintWriter(fw);
+			
+			pw.println(this.dim);
+			for (int v = 0; v<this.dim; v++)
+				pw.println (this.b.getVector()[v]);
+			
+			
+			
+			for (int f = 0; f< dim; f++)
+				for (int c = 0; c < dim ; c++)
+					pw.printf("%d %d %f\n",f,c,this.m.getValor(f, c));
+			
+			
+		} catch (Exception e) {
+
+			e.printStackTrace();
+		}
+
+		finally {
+			// En el finally cerramos el fichero, para asegurarnos
+			// que se cierra tanto si todo va bien como si salta
+			// una excepcion.
+			try {
+				if (null != fw) {
+					fw.close();
+				}
+			} catch (Exception e2) {
+				e2.printStackTrace();
+			}
+		}
+			
+	}
+
+	private void generarOut(boolean resultado) {
+
+		File archivo = null;
+		FileWriter fw = null;
+		PrintWriter pw = null;
+
+		try {
+			archivo = new File("src/sel/OuputGenerado/" + this.path + ".out");
+			fw = new FileWriter(archivo);
+			pw = new PrintWriter(fw);
+
+			// Si no hubo resultados
+			if (!resultado) {
+
+				pw.println("NO");
+			} else {
+
+				// Si hay un resultado para mostrar
+				Integer dim = this.b.getVector().length;
+				pw.write(dim + "\n");
+				for (int i = 0; i < dim; i++) {
+					pw.write(this.x.getVector()[i] + "\n");
+
+				}
+				pw.println(error);
+			}
+
+		} catch (Exception e) {
+
+			e.printStackTrace();
+		}
+
+		finally {
+			// En el finally cerramos el fichero, para asegurarnos
+			// que se cierra tanto si todo va bien como si salta
+			// una excepcion.
+			try {
+				if (null != fw) {
+					fw.close();
+				}
+			} catch (Exception e2) {
+				e2.printStackTrace();
+			}
 		}
 	}
 
 	public static void main(String[] args) {
 
-		Sel s = new Sel("SEL3");
-		s.resolver();		
-		if (s.test())
-			System.out.println ("Resultado Correcto");
-		else
-			System.out.println ("Resultado Incorrecto");
+		Sel s = null;
+		
+//		for (int i = 1 ; i<8 ; i++){
+//			s = new Sel("Input/SEL"+i);
+//		System.out.println("SEL"+i);
+		s = new Sel("InputGenerado/Input");
+		s.resolver();
+		int resultado = s.test();
+		
+		switch (resultado){
+		case 1:
+			System.out.println("Resultado Correcto");
+			break;
+		case 0:
+			System.out.println("Resultado Incorrecto");
+			break;
+		case 2:
+			System.out.println("No es un sistema compatible determinado");
+			break;
+		}
+		
+					
+//		}
 
 	}
 }

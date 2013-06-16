@@ -2,16 +2,73 @@ package programaProbador;
 
 import java.util.Random;
 
+
 import sel.Sel;
 import vectorMath.VectorMath;
 import matrizMath.MatrizMath;
+
+
 
 public class ProgramaProbador {
 
 	/**
 	 * @param args
 	 */	
+	
 
+	
+	public void GeneraInput(Sel sistEcLineal)
+	{
+
+	
+	}
+	public static void PruebaInversa()
+	{
+		int dim =50;
+		MatrizMath mPrueba = new MatrizMath(dim, dim);
+		MatrizMath mInversa = null;
+		MatrizMath mIdentidadReal = null;
+		boolean correcto = true;
+		Random r1 = new Random();
+		
+		int count =0;
+		double determinante = 0;
+		
+		while (correcto && count < 1000)
+		{
+			mPrueba.generaMatrizAleatoria();
+			System.out.printf ("Matriz generada numero %d, dimension: %d %d\n",count+1,dim,dim);
+			System.out.println (mPrueba);
+			
+			mIdentidadReal = mPrueba.identidad();
+			
+			determinante = mPrueba.determinante2();
+			System.out.printf("Determinante %f: \n", determinante);
+			
+			System.out.printf ("Matriz inversa numero %d\n",count+1,dim,dim);
+			mInversa = mPrueba.inversa();
+			System.out.println (mInversa);
+			
+			
+			if (!MatrizMath.comparaDeterminantes(determinante, 0))
+			{
+			System.out.printf ("Producto Matriz x Inversa numero %d\n",count+1,dim,dim);
+			System.out.println (mPrueba.producto(mInversa));
+			}
+			
+			System.out.printf ("Matriz Identidad numero %d\n",count+1,dim,dim);
+			System.out.println (mPrueba.identidad());
+			
+			
+			if (!mPrueba.producto(mInversa).equals(mIdentidadReal))
+			{
+				System.out.printf("Incorrecto");
+				correcto = false;
+			}
+			count++;
+		
+		}
+	}
 	
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
@@ -26,10 +83,10 @@ public class ProgramaProbador {
 		
 		VectorMath vectorPrueba;
 		
+
 		
-		//Sel sel1 = new Sel(path)
-		while (correcto && count < 1)
-		{
+		
+
 			dim =50; //r1.nextInt(4);
 			if (dim >1)
 			{
@@ -40,62 +97,16 @@ public class ProgramaProbador {
 			vectorPrueba.generaVectorAleatorio();
 			
 			Sel selPrueba = new Sel(mPrueba, vectorPrueba);
+			selPrueba.generaInput();
 			
 			selPrueba.resolver();
 			
 			System.out.println(selPrueba);
+			}
 			
-			
-			
-			
-			//System.out.printf ("Matriz generada numero %d, dimension: %d %d\n",count+1,dim,dim);
-			//System.out.println (mPrueba);
-			
-			//double det1 = mPrueba.determinante2();
-			//double det2 = mPrueba.determinanteObsoleto();
-			//System.out.printf("Determinante %f - %f: ", det1, det2);
-			
-			
-			
-			
-
-//			if (mPrueba.comparaDeterminantes(det1, det2))
-//				System.out.println("Determinante Correcto");
-//			else
-//				{
-//				System.out.println("Determinante NO Correcto");
-//				correcto= false;
-//				
-//				}
-//			
-//			System.out.printf ("Matriz inversa numero %d\n",count+1,dim,dim);
-//			mInversa = mPrueba.inversa();
-//			System.out.println (mInversa);
-			
-			//determinante = mPrueba.determinante2();
-//			if (!MatrizMath.comparaDeterminantes(det2, 0))
-//			{
-//			System.out.printf ("Producto Matriz x Inversa numero %d\n",count+1,dim,dim);
-//			System.out.println (mPrueba.producto(mInversa));
-//			}
-			
-			//System.out.printf ("Matriz Identidad numero %d\n",count+1,dim,dim);
-			//System.out.println (mPrueba.identidad());
-			
-			//System.out.println (mPrueba);
-			
-//			if (!MatrizMath.comparaDeterminantes(det2, 0))
-//				if (!mPrueba.producto(mInversa).equals(mPrueba.identidad()))
-//				{
-//					System.out.printf("Incorrecto");
-//					correcto = false;
-//				}
-//			}	
-			count++;
-		}
-		//System.out.println (correcto);		
+		
 
 		}
-	}
+	
 
 }
