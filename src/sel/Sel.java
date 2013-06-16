@@ -34,8 +34,6 @@ public class Sel {
 
 	public Sel(String path) {
 
-		this.path = path;
-
 		this.path = path.substring(path.indexOf('/')+1);
 
 		
@@ -106,11 +104,7 @@ public class Sel {
 		retorno += "Vector B:\n" + this.b + "\n";
 		retorno += "Vector X:\n" + this.x + "\n";
 		retorno += "Error: " + this.error
-<<<<<<< HEAD
 				+ (this.error < 1 ? " Correcto" : " Incorrecto");
-=======
-				+ (this.error < EPSILON ? " Correcto" : " Incorrecto");
->>>>>>> branch 'master' of https://github.com/sebaim/TP2.git
 		// System.out.println("Matriz:");
 		// System.out.println(this.m);
 		return retorno;
@@ -118,11 +112,7 @@ public class Sel {
 
 	public void resolver() {
 
-<<<<<<< HEAD
 		//this.error = EPSILON;
-=======
-		this.error = EPSILON;
->>>>>>> branch 'master' of https://github.com/sebaim/TP2.git
 
 		// calculo de la inversa de M
 		MatrizMath Minversa = this.m.inversa();
@@ -176,11 +166,7 @@ public class Sel {
 			Double[] resultado = x.getVector();
 			System.out.println("Vector de Resultados:");
 			for (int i = 0; i < dim; i++) {
-<<<<<<< HEAD
 				System.out.printf("%.20f\n", resultado[i]);
-=======
-				System.out.printf("%.3f\n", resultado[i]);
->>>>>>> branch 'master' of https://github.com/sebaim/TP2.git
 			}
 		}
 	}
@@ -193,18 +179,12 @@ public class Sel {
 
 		if (this.error== null || this.error >= 1) {
 
-<<<<<<< HEAD
 			generarOut(false);			
 			return this.error == null ?2:0;
-=======
-			generarOut(false);
-			return false;
->>>>>>> branch 'master' of https://github.com/sebaim/TP2.git
 		} else {
 
 			generarOut(true);
 			this.mostrarResultado();
-<<<<<<< HEAD
 			return 1;
 		}
 	}
@@ -260,20 +240,6 @@ public class Sel {
 
 		try {
 			archivo = new File("src/sel/OuputGenerado/" + this.path + ".out");
-=======
-			return true;
-		}
-	}
-
-	private void generarOut(boolean resultado) {
-
-		File archivo = null;
-		FileWriter fw = null;
-		PrintWriter pw = null;
-
-		try {
-			archivo = new File("src/sel/" + this.path + ".out");
->>>>>>> branch 'master' of https://github.com/sebaim/TP2.git
 			fw = new FileWriter(archivo);
 			pw = new PrintWriter(fw);
 
@@ -314,7 +280,6 @@ public class Sel {
 
 	public static void main(String[] args) {
 
-<<<<<<< HEAD
 		Sel s = null;
 		
 //		for (int i = 1 ; i<8 ; i++){
@@ -338,15 +303,6 @@ public class Sel {
 		
 					
 //		}
-=======
-		Sel s = new Sel("SEL3");
-		s.resolver();
-		boolean resultado = s.test();
-		if (resultado)
-			System.out.println("Resultado Correcto");
-		else
-			System.out.println("Resultado Incorrecto");
->>>>>>> branch 'master' of https://github.com/sebaim/TP2.git
 
 	}
 }
