@@ -611,10 +611,12 @@ public class MatrizMath {
 	/*
 	 * Norma dos de una matriz:
 	 * 
-	 * Su formula es ||A||_2 = sqrt( P ( A * Atraspuesta ) )
+	 * Su formula es para matrices simetricas 
+	 * ||A||_2 = max{ | Li(A) | }
 	 * 
-	 * donde P = mayor valor de una matriz
+	 * donde Li(A) = son los autovalores de A
 	 */
+<<<<<<< HEAD
 	public double normaDos() {
 
 		//MatrizMath productoIntermedio = this.producto(this.traspuesta());
@@ -622,20 +624,36 @@ public class MatrizMath {
  		double valorMayor = this.matriz[0][0];
  		double valorMenor = this.matriz[0][0];
  		
+=======
+	public Double normaDos() {
+
+		Double valorMayor = this.matriz[0][0];
+>>>>>>> branch 'master' of https://github.com/sebaim/TP2.git
 		for (int i = 0; i < this.filas; i++) {
 			for (int j = 0; j < this.columnas; j++) {
 
+<<<<<<< HEAD
 				if (this.matriz[i][j] > valorMayor)
 					valorMayor = this.matriz[i][j];
 				if (this.matriz[i][j] < valorMenor)
 					valorMenor = this.matriz[i][j];
 					
+=======
+				if (this.matriz[i][j] > valorMayor) {
+
+					valorMayor = this.matriz[i][j];
+				}
+>>>>>>> branch 'master' of https://github.com/sebaim/TP2.git
 			}
 
 		}
 
+<<<<<<< HEAD
 		//valorMayor = Math.abs(valorMayor);
 		return Math.pow(valorMayor-valorMenor,2);
+=======
+		return Math.abs(valorMayor);
+>>>>>>> branch 'master' of https://github.com/sebaim/TP2.git
 
 	}
 
