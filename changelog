@@ -1,4 +1,8 @@
 --sebastian
+--18/06/2013
+	Agrego outputs esperados
+	
+--sebastian
 --16/06/2013
 	Agregue casos de SEL, pregunto en comprobar el error si es >1, ya que >epsilon a veces falla
 	Cambie norma 2 como dijo el profe.
