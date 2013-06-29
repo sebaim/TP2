@@ -87,7 +87,7 @@ public class ProgramaProbador {
 		
 		
 
-			dim =50; //r1.nextInt(4);
+			dim =100; //r1.nextInt(4);
 			if (dim >1)
 			{
 			mPrueba= new MatrizMath(dim,dim);

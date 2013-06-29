@@ -209,7 +209,7 @@ public class Sel {
 			
 			for (int f = 0; f< dim; f++)
 				for (int c = 0; c < dim ; c++)
-					pw.printf("%d %d %f\n",f,c,this.m.getValor(f, c));
+					pw.println(f+" "+c+" "+this.m.getValor(f, c));
 			
 			
 		} catch (Exception e) {
@@ -251,9 +251,9 @@ public class Sel {
 
 				// Si hay un resultado para mostrar
 				Integer dim = this.b.getVector().length;
-				pw.write(dim + "\n");
+				pw.println(dim);
 				for (int i = 0; i < dim; i++) {
-					pw.write(this.x.getVector()[i] + "\n");
+					pw.println(this.x.getVector()[i]);
 
 				}
 				pw.println(error);
